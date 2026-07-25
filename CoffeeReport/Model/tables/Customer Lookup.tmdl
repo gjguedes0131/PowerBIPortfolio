@@ -1,0 +1,96 @@
+﻿table 'Customer Lookup'
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column home_store
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: home_store
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_first-name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: customer_first-name
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_email
+		dataType: string
+		summarizeBy: none
+		sourceColumn: customer_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_since
+		dataType: dateTime
+		formatString: Long Date
+		summarizeBy: none
+		sourceColumn: customer_since
+
+		variation Variation
+			isDefault
+			relationship: 5846dc8d-c4f2-4689-a75c-f7c74d4ffe19
+			defaultHierarchy: LocalDateTable_773df8e8-32db-472a-8a04-4dcf649bcf82.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column loyalty_card_number
+		dataType: string
+		summarizeBy: none
+		sourceColumn: loyalty_card_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column birthdate
+		dataType: dateTime
+		formatString: Long Date
+		summarizeBy: none
+		sourceColumn: birthdate
+
+		variation Variation
+			isDefault
+			relationship: 422eb90b-bb4c-4168-85c3-3e7cf46517cd
+			defaultHierarchy: LocalDateTable_9a615648-ac29-44b7-aa4f-1816252c59c6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column gender
+		dataType: string
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column birth_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: birth_year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Customer Lookup' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gusjg\source\repos\gjguedes0131\PowerBIDax Course\Advanced+DAX+Data+Files\Advanced DAX Data Files\Customer Lookup.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_id", Int64.Type}, {"home_store", Int64.Type}, {"customer_first-name", type text}, {"customer_email", type text}, {"customer_since", type date}, {"loyalty_card_number", type text}, {"birthdate", type date}, {"gender", type text}, {"birth_year", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

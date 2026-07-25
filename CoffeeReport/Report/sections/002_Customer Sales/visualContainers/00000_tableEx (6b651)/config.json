@@ -1,0 +1,21 @@
+{
+  "name": "6b651c6e0db0c9c506cc",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 4.6489323969638932,
+        "y": 192.93069447400157,
+        "z": 1000,
+        "width": 646.20160317798116,
+        "height": 149.92806980208556,
+        "tabOrder": 0
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "hasDefaultSort": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "75c1322677c8a1b848d4",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 41.935483870967737,
+        "y": 163.44086021505376,
+        "z": 1000,
+        "width": 667.741935483871,
+        "height": 526.88172043010752
+      }
+    }
+  ],
+  "singleVisualGroup": {
+    "displayName": "Sales",
+    "groupMode": 0
+  }
+}

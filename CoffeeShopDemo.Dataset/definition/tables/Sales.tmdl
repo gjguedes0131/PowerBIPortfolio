@@ -1,0 +1,103 @@
+table Sales
+	lineageTag: a2b3c4d5-e6f7-8901-abcd-234567890123
+
+	column transaction_id
+		dataType: int64
+		lineageTag: a1000001-0000-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: transaction_id
+
+	column transaction_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a1000001-0000-0000-0000-000000000002
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column transaction_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: a1000001-0000-0000-0000-000000000003
+		summarizeBy: none
+		sourceColumn: transaction_time
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column store_id
+		dataType: int64
+		lineageTag: a1000001-0000-0000-0000-000000000004
+		summarizeBy: none
+		sourceColumn: store_id
+
+	column staff_id
+		dataType: int64
+		lineageTag: a1000001-0000-0000-0000-000000000005
+		summarizeBy: none
+		sourceColumn: staff_id
+
+	column customer_id
+		dataType: int64
+		lineageTag: a1000001-0000-0000-0000-000000000006
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column instore_yn
+		dataType: string
+		lineageTag: a1000001-0000-0000-0000-000000000007
+		summarizeBy: none
+		sourceColumn: instore_yn
+
+	column product_id
+		dataType: int64
+		lineageTag: a1000001-0000-0000-0000-000000000008
+		summarizeBy: none
+		sourceColumn: product_id
+
+	column quantity_sold
+		dataType: int64
+		lineageTag: a1000001-0000-0000-0000-000000000009
+		summarizeBy: sum
+		sourceColumn: quantity_sold
+
+	column unit_price
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: a1000001-0000-0000-0000-000000000010
+		summarizeBy: none
+		sourceColumn: unit_price
+
+	column promo_item_yn
+		dataType: string
+		lineageTag: a1000001-0000-0000-0000-000000000011
+		summarizeBy: none
+		sourceColumn: promo_item_yn
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(SourceFolder & "Sales by Store.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {
+				        {"transaction_id", Int64.Type},
+				        {"transaction_date", type date},
+				        {"transaction_time", type time},
+				        {"store_id", Int64.Type},
+				        {"staff_id", Int64.Type},
+				        {"customer_id", Int64.Type},
+				        {"instore_yn", type text},
+				        {"order", Int64.Type},
+				        {"line_item_id", Int64.Type},
+				        {"product_id", Int64.Type},
+				        {"quantity_sold", Int64.Type},
+				        {"unit_price", type number},
+				        {"promo_item_yn", type text}
+				    }),
+				    RemovedColumns = Table.RemoveColumns(ChangedTypes, {"order", "line_item_id"})
+				in
+				    RemovedColumns
+
+	annotation PBI_ResultType = Table
+

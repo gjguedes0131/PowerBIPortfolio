@@ -1,0 +1,146 @@
+{
+  "Commands": [
+    {
+      "SemanticQueryDataShapeCommand": {
+        "Query": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MeasuresTable",
+              "Type": 0
+            },
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            },
+            {
+              "Name": "s",
+              "Entity": "Store Lookup",
+              "Type": 0
+            }
+          ],
+          "Select": [
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "CustomerSales"
+              },
+              "Name": "MeasuresTable.CustomerSales",
+              "NativeReferenceName": "CustomerSales"
+            },
+            {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "c"
+                  }
+                },
+                "Property": "Year_ID"
+              },
+              "Name": "Calendar.Year_ID",
+              "NativeReferenceName": "Year"
+            },
+            {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "s"
+                  }
+                },
+                "Property": "store_id"
+              },
+              "Name": "Store Lookup.store_id",
+              "NativeReferenceName": "store_id"
+            },
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "CustomerSalesFormat"
+              },
+              "Name": "MeasuresTable.CustomerSalesFormat"
+            },
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "SelectedProductTitle"
+              },
+              "Name": "MeasuresTable.SelectedProductTitle"
+            }
+          ],
+          "OrderBy": [
+            {
+              "Direction": 2,
+              "Expression": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Source": "m"
+                    }
+                  },
+                  "Property": "CustomerSales"
+                }
+              }
+            }
+          ]
+        },
+        "Binding": {
+          "Primary": {
+            "Groupings": [
+              {
+                "Projections": [
+                  0,
+                  2,
+                  3
+                ]
+              }
+            ]
+          },
+          "Secondary": {
+            "Groupings": [
+              {
+                "Projections": [
+                  1
+                ]
+              }
+            ]
+          },
+          "Projections": [
+            4
+          ],
+          "DataReduction": {
+            "DataVolume": 4,
+            "Primary": {
+              "Window": {
+                "Count": 200
+              }
+            },
+            "Secondary": {
+              "Top": {
+                "Count": 60
+              }
+            }
+          },
+          "SuppressedJoinPredicates": [
+            3
+          ],
+          "Version": 1
+        },
+        "ExecutionMetricsKind": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Calendar","Customer Lookup","Employee Lookup","Product Lookup","Sales","Store Lookup","_Measures","SourceFolder"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Calendar
+ref table 'Customer Lookup'
+ref table 'Employee Lookup'
+ref table 'Product Lookup'
+ref table Sales
+ref table 'Store Lookup'
+ref table _Measures
+ref table DateTableTemplate_767f6516-dd51-4681-b0a8-9ffaa7ea439b
+ref table LocalDateTable_d447a9f6-d681-4169-b3b1-b35eab6e5b8f
+ref table LocalDateTable_67c52a2c-e191-4094-82e2-11425180eeab
+ref table LocalDateTable_b7492b7f-e526-4d12-8543-c16140cf071d
+

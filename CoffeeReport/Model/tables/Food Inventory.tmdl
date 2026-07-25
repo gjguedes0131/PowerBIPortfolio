@@ -1,0 +1,74 @@
+﻿table 'Food Inventory'
+
+	column store_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: store_id
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column baked_date
+		dataType: dateTime
+		formatString: mm/dd/yyyy
+		summarizeBy: none
+		sourceColumn: baked_date
+
+		variation Variation
+			isDefault
+			relationship: 95baf43d-d253-45c6-8a1e-8551685312c8
+			defaultHierarchy: LocalDateTable_3ed37b49-0ade-4aa1-ad9b-ceeecf2b1b2f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column transaction_date
+		dataType: dateTime
+		formatString: Long Date
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity_start_of_day
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: quantity_start_of_day
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity_sold
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: quantity_sold
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Food Inventory' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gusjg\source\repos\gjguedes0131\PowerBIDax Course\Advanced+DAX+Data+Files\Advanced DAX Data Files\Food Inventory.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"store_id", Int64.Type}, {"baked_date", type date}, {"transaction_date", type date}, {"product_id", Int64.Type}, {"quantity_start_of_day", Int64.Type}, {"quantity_sold", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

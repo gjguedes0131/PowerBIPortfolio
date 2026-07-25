@@ -1,0 +1,460 @@
+{
+  "name": "360502f794d7ddfbb79d",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "height": 432.46273215644521,
+        "width": 666.72878131925643,
+        "x": 0,
+        "y": 94.418988273662336,
+        "z": 1000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "lineStackedColumnComboChart",
+    "projections": {
+      "Y": [
+        {
+          "queryRef": "MeasuresTable.QuantityStartofdayInventory"
+        },
+        {
+          "queryRef": "MeasuresTable.Ending Inventory"
+        },
+        {
+          "queryRef": "MeasuresTable.Baked Quantity Sold"
+        }
+      ],
+      "Y2": [
+        {
+          "queryRef": "MeasuresTable.% of Inventory sold to Overall Production"
+        }
+      ],
+      "Category": [
+        {
+          "queryRef": "Food Inventory.baked_date.Variation.Date Hierarchy.Year",
+          "active": true
+        },
+        {
+          "queryRef": "Food Inventory.baked_date.Variation.Date Hierarchy.Quarter"
+        },
+        {
+          "queryRef": "Food Inventory.baked_date.Variation.Date Hierarchy.Month"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "m",
+          "Entity": "MeasuresTable",
+          "Type": 0
+        },
+        {
+          "Name": "f",
+          "Entity": "Food Inventory",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "m"
+              }
+            },
+            "Property": "QuantityStartofdayInventory"
+          },
+          "Name": "MeasuresTable.QuantityStartofdayInventory",
+          "NativeReferenceName": "Inventory Start of Day"
+        },
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "m"
+              }
+            },
+            "Property": "Baked Quantity Sold"
+          },
+          "Name": "MeasuresTable.Baked Quantity Sold",
+          "NativeReferenceName": "Inventory Sold"
+        },
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "m"
+              }
+            },
+            "Property": "% of Inventory sold to Overall Production"
+          },
+          "Name": "MeasuresTable.% of Inventory sold to Overall Production",
+          "NativeReferenceName": "% of Ending Inventory to Overall Production"
+        },
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "m"
+              }
+            },
+            "Property": "Ending Inventory"
+          },
+          "Name": "MeasuresTable.Ending Inventory",
+          "NativeReferenceName": "Ending Inventory"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "f"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "baked_date"
+                  }
+                },
+                "Hierarchy": "Date Hierarchy"
+              }
+            },
+            "Level": "Year"
+          },
+          "Name": "Food Inventory.baked_date.Variation.Date Hierarchy.Year",
+          "NativeReferenceName": "baked_date Year"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "f"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "baked_date"
+                  }
+                },
+                "Hierarchy": "Date Hierarchy"
+              }
+            },
+            "Level": "Quarter"
+          },
+          "Name": "Food Inventory.baked_date.Variation.Date Hierarchy.Quarter",
+          "NativeReferenceName": "baked_date Quarter"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "f"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "baked_date"
+                  }
+                },
+                "Hierarchy": "Date Hierarchy"
+              }
+            },
+            "Level": "Month"
+          },
+          "Name": "Food Inventory.baked_date.Variation.Date Hierarchy.Month",
+          "NativeReferenceName": "baked_date Month"
+        }
+      ]
+    },
+    "columnProperties": {
+      "MeasuresTable.QuantityStartofdayInventory": {
+        "displayName": "Inventory Start of Day"
+      },
+      "MeasuresTable.Baked Quantity Sold": {
+        "displayName": "Inventory Sold"
+      },
+      "MeasuresTable.% of Inventory sold to Overall Production": {
+        "displayName": "% of Ending Inventory to Overall Production"
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Scalar'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Arial'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Arial'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Arial'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 4,
+                      "Percent": 0.6
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "zoom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "-1D"
+                }
+              }
+            },
+            "valueCustomFormatString": {
+              "expr": {
+                "Literal": {
+                  "Value": "'#,###'"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "valueCustomFormatString": {
+              "expr": {
+                "Literal": {
+                  "Value": "''"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "MeasuresTable.% of Inventory sold to Overall Production"
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  },
+                  "Property": "SelectedProductTitle"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7BB74D'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.1
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'476042999254d589ec55'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "75c1322677c8a1b848d4"
+}

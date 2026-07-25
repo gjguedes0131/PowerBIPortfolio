@@ -1,0 +1,323 @@
+{
+  "Commands": [
+    {
+      "SemanticQueryDataShapeCommand": {
+        "Query": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "MeasuresTable",
+              "Type": 0
+            },
+            {
+              "Name": "f",
+              "Entity": "Food Inventory",
+              "Type": 0
+            },
+            {
+              "Name": "c",
+              "Entity": "Calendar",
+              "Type": 0
+            }
+          ],
+          "Select": [
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "QuantityStartofdayInventory"
+              },
+              "Name": "MeasuresTable.QuantityStartofdayInventory",
+              "NativeReferenceName": "Inventory Start of Day"
+            },
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "Baked Quantity Sold"
+              },
+              "Name": "MeasuresTable.Baked Quantity Sold",
+              "NativeReferenceName": "Inventory Sold"
+            },
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "% of Inventory sold to Overall Production"
+              },
+              "Name": "MeasuresTable.% of Inventory sold to Overall Production",
+              "NativeReferenceName": "% of Ending Inventory to Overall Production"
+            },
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "Ending Inventory"
+              },
+              "Name": "MeasuresTable.Ending Inventory",
+              "NativeReferenceName": "Ending Inventory"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "PropertyVariationSource": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Name": "Variation",
+                        "Property": "baked_date"
+                      }
+                    },
+                    "Hierarchy": "Date Hierarchy"
+                  }
+                },
+                "Level": "Year"
+              },
+              "Name": "Food Inventory.baked_date.Variation.Date Hierarchy.Year",
+              "NativeReferenceName": "baked_date Year"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "PropertyVariationSource": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Name": "Variation",
+                        "Property": "baked_date"
+                      }
+                    },
+                    "Hierarchy": "Date Hierarchy"
+                  }
+                },
+                "Level": "Quarter"
+              },
+              "Name": "Food Inventory.baked_date.Variation.Date Hierarchy.Quarter",
+              "NativeReferenceName": "baked_date Quarter"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "PropertyVariationSource": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Name": "Variation",
+                        "Property": "baked_date"
+                      }
+                    },
+                    "Hierarchy": "Date Hierarchy"
+                  }
+                },
+                "Level": "Month"
+              },
+              "Name": "Food Inventory.baked_date.Variation.Date Hierarchy.Month",
+              "NativeReferenceName": "baked_date Month"
+            },
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "m"
+                  }
+                },
+                "Property": "SelectedProductTitle"
+              },
+              "Name": "MeasuresTable.SelectedProductTitle"
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "Comparison": {
+                      "ComparisonKind": 0,
+                      "Left": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "m"
+                            }
+                          },
+                          "Property": "% of Inventory sold to Overall Production"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "1L"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Target": [
+                {
+                  "HierarchyLevel": {
+                    "Expression": {
+                      "Hierarchy": {
+                        "Expression": {
+                          "PropertyVariationSource": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "f"
+                              }
+                            },
+                            "Name": "Variation",
+                            "Property": "baked_date"
+                          }
+                        },
+                        "Hierarchy": "Date Hierarchy"
+                      }
+                    },
+                    "Level": "Year"
+                  }
+                },
+                {
+                  "HierarchyLevel": {
+                    "Expression": {
+                      "Hierarchy": {
+                        "Expression": {
+                          "PropertyVariationSource": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "f"
+                              }
+                            },
+                            "Name": "Variation",
+                            "Property": "baked_date"
+                          }
+                        },
+                        "Hierarchy": "Date Hierarchy"
+                      }
+                    },
+                    "Level": "Quarter"
+                  }
+                },
+                {
+                  "HierarchyLevel": {
+                    "Expression": {
+                      "Hierarchy": {
+                        "Expression": {
+                          "PropertyVariationSource": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "f"
+                              }
+                            },
+                            "Name": "Variation",
+                            "Property": "baked_date"
+                          }
+                        },
+                        "Hierarchy": "Date Hierarchy"
+                      }
+                    },
+                    "Level": "Month"
+                  }
+                }
+              ]
+            },
+            {
+              "Condition": {
+                "And": {
+                  "Left": {
+                    "Comparison": {
+                      "ComparisonKind": 2,
+                      "Left": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "c"
+                            }
+                          },
+                          "Property": "Transaction_Date"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "datetime'2017-01-01T00:00:00'"
+                        }
+                      }
+                    }
+                  },
+                  "Right": {
+                    "Comparison": {
+                      "ComparisonKind": 3,
+                      "Left": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "c"
+                            }
+                          },
+                          "Property": "Transaction_Date"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "datetime'2019-05-01T00:00:00'"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Binding": {
+          "Primary": {
+            "Groupings": [
+              {
+                "Projections": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              }
+            ]
+          },
+          "Projections": [
+            7
+          ],
+          "DataReduction": {
+            "DataVolume": 4,
+            "Primary": {
+              "Sample": {}
+            }
+          },
+          "Version": 1
+        },
+        "ExecutionMetricsKind": 1
+      }
+    }
+  ]
+}

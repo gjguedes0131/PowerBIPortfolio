@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "CardRevenueMTD",
+  "position": {
+    "x": 20,
+    "y": 240,
+    "z": 0,
+    "width": 290,
+    "height": 200,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": { "SourceRef": { "Entity": "_Measures" } },
+                  "Property": "Revenue MTD"
+                }
+              },
+              "queryRef": "_Measures.Revenue MTD",
+              "nativeQueryRef": "Revenue MTD"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": { "Literal": { "Value": "'#6F4E37'" } }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

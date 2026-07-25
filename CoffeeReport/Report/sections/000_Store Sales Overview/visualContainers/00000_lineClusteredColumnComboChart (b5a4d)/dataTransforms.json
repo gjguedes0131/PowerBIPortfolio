@@ -1,0 +1,407 @@
+{
+  "objects": {
+    "lineStyles": [
+      {
+        "properties": {
+          "lineStyle": {
+            "expr": {
+              "Literal": {
+                "Value": "'solid'"
+              }
+            }
+          },
+          "strokeLineJoin": {
+            "expr": {
+              "Literal": {
+                "Value": "'round'"
+              }
+            }
+          },
+          "areaShow": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "showMarker": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "markerShape": {
+            "expr": {
+              "Literal": {
+                "Value": "'longDash'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "categoryAxis": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "showAxisTitle": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "axisType": {
+            "expr": {
+              "Literal": {
+                "Value": "'Scalar'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Arial'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "valueAxis": [
+      {
+        "properties": {
+          "showAxisTitle": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "secShow": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "secFontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Arial'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Arial'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "legend": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "legendMarkerRendering": {
+            "expr": {
+              "Literal": {
+                "Value": "'markerOnly'"
+              }
+            }
+          },
+          "matchLineColor": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Arial'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "dataPoint": [
+      {
+        "properties": {
+          "fill": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#7BB74D'"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "MeasuresTable.CustomerSales"
+        }
+      },
+      {
+        "properties": {
+          "fill": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 4,
+                    "Percent": 0.6
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "zoom": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "categoryMax": {
+            "expr": {
+              "Literal": {
+                "Value": "1523449256688.0044D"
+              }
+            }
+          },
+          "categoryMin": {
+            "expr": {
+              "Literal": {
+                "Value": "1518506020126.9546D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "seriesLabels": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "projectionOrdering": {
+    "Y2": [
+      0
+    ],
+    "Y": [
+      1
+    ],
+    "Category": [
+      2
+    ]
+  },
+  "projectionActiveItems": {
+    "Category": [
+      {
+        "queryRef": "Calendar.Transaction_Date",
+        "suppressConcat": false
+      }
+    ]
+  },
+  "splits": [
+    {
+      "selects": {
+        "1": true,
+        "2": true
+      }
+    },
+    {
+      "selects": {
+        "0": true,
+        "2": true
+      }
+    }
+  ],
+  "queryMetadata": {
+    "Select": [
+      {
+        "Restatement": "Store Sales",
+        "Name": "MeasuresTable.CustomerSales",
+        "Type": 1,
+        "Format": "\\$#,0;(\\$#,0);\\$#,0"
+      },
+      {
+        "Restatement": "Quantity Sold",
+        "Name": "MeasuresTable.Quantity Sold",
+        "Type": 3
+      },
+      {
+        "Restatement": "Transaction_Date",
+        "Name": "Calendar.Transaction_Date",
+        "Type": 4,
+        "Format": "MM/dd/yyyy"
+      }
+    ]
+  },
+  "visualElements": [
+    {
+      "DataRoles": [
+        {
+          "Name": "Y",
+          "Projection": 1,
+          "isActive": false
+        },
+        {
+          "Name": "Category",
+          "Projection": 2,
+          "isActive": true
+        }
+      ]
+    },
+    {
+      "DataRoles": [
+        {
+          "Name": "Y2",
+          "Projection": 0,
+          "isActive": false
+        },
+        {
+          "Name": "Category",
+          "Projection": 2,
+          "isActive": true
+        }
+      ]
+    }
+  ],
+  "selects": [
+    {
+      "displayName": "Store Sales",
+      "format": "\\$#,0;(\\$#,0);\\$#,0",
+      "queryName": "MeasuresTable.CustomerSales",
+      "roles": {
+        "Y2": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 259
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "MeasuresTable"
+            }
+          },
+          "Property": "CustomerSales"
+        }
+      }
+    },
+    {
+      "displayName": "Quantity Sold",
+      "queryName": "MeasuresTable.Quantity Sold",
+      "roles": {
+        "Y": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "MeasuresTable"
+            }
+          },
+          "Property": "Quantity Sold"
+        }
+      }
+    },
+    {
+      "displayName": "Transaction_Date",
+      "format": "MM/dd/yyyy",
+      "queryName": "Calendar.Transaction_Date",
+      "roles": {
+        "Category": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 519
+      },
+      "expr": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Calendar"
+            }
+          },
+          "Property": "Transaction_Date"
+        }
+      }
+    },
+    {
+      "displayName": "SelectedProductTitle",
+      "queryName": "MeasuresTable.SelectedProductTitle",
+      "roles": {},
+      "type": {
+        "category": null,
+        "underlyingType": 1
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "MeasuresTable"
+            }
+          },
+          "Property": "SelectedProductTitle"
+        }
+      },
+      "relatedObjects": {
+        "title": {
+          "text": [
+            null
+          ]
+        }
+      }
+    }
+  ]
+}

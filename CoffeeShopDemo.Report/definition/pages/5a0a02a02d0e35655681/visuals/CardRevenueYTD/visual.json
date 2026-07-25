@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "CardRevenueYTD",
+  "position": {
+    "x": 980,
+    "y": 20,
+    "z": 0,
+    "width": 230,
+    "height": 200,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": { "SourceRef": { "Entity": "_Measures" } },
+                  "Property": "Revenue YTD"
+                }
+              },
+              "queryRef": "_Measures.Revenue YTD",
+              "nativeQueryRef": "Revenue YTD"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": { "Literal": { "Value": "'#C8A165'" } }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

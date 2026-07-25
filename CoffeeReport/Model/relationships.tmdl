@@ -1,0 +1,65 @@
+﻿relationship 5fd6c688-b85b-4bf6-9f8c-e4719cbccac9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Transaction_Date
+	toColumn: LocalDateTable_e15ae6b9-b234-49d8-8789-d4936eb05080.Date
+
+relationship 5846dc8d-c4f2-4689-a75c-f7c74d4ffe19
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Lookup'.customer_since
+	toColumn: LocalDateTable_773df8e8-32db-472a-8a04-4dcf649bcf82.Date
+
+relationship 422eb90b-bb4c-4168-85c3-3e7cf46517cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Lookup'.birthdate
+	toColumn: LocalDateTable_9a615648-ac29-44b7-aa4f-1816252c59c6.Date
+
+relationship e7e488c3-8278-4ce9-b93d-8cc1565fa709
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Employee Lookup'.start_date
+	toColumn: LocalDateTable_9a9b09d6-fb36-4e27-bfc9-5eaff56ca514.Date
+
+relationship 95baf43d-d253-45c6-8a1e-8551685312c8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Food Inventory'.baked_date
+	toColumn: LocalDateTable_3ed37b49-0ade-4aa1-ad9b-ceeecf2b1b2f.Date
+
+relationship 6ec76e96-74ae-bc98-0b8c-1e645a9409dc
+	fromColumn: 'Food Inventory'.transaction_date
+	toColumn: Calendar.Transaction_Date
+
+relationship 1f7b985e-debb-6efe-7ca1-dc218e0341ee
+	fromColumn: 'Sales by Store'.transaction_date
+	toColumn: Calendar.Transaction_Date
+
+relationship 17536e05-948b-c1cc-5526-888607cd2f18
+	fromColumn: 'Food Inventory'.store_id
+	toColumn: 'Store Lookup'.store_id
+
+relationship aeeec99d-a977-b74d-7eba-b3d5fe040f39
+	fromColumn: 'Sales by Store'.store_id
+	toColumn: 'Store Lookup'.store_id
+
+relationship 9bba29a1-829b-e172-db45-64f5f9cbbdfc
+	fromColumn: 'Food Inventory'.product_id
+	toColumn: 'Product Lookup'.product_id
+
+relationship 3678f304-d639-7ee6-3adc-9e33059b1041
+	fromColumn: 'Sales by Store'.staff_id
+	toColumn: 'Employee Lookup'.staff_id
+
+relationship ccbde49f-8949-0b28-8dfd-8e44b68ec5e8
+	fromColumn: 'Sales by Store'.customer_id
+	toColumn: 'Customer Lookup'.customer_id
+
+relationship db73c78f-c935-b3e1-b970-6a6dc7e5d084
+	fromColumn: 'Sales by Store'.product_id
+	toColumn: 'Product Lookup'.product_id
+
+relationship a5dbf554-7247-b1f7-eac7-51d77e2dca92
+	fromColumn: Top10ProductsTable.product_id
+	toColumn: 'Product Lookup'.product_id
+
+relationship a42f9de7-0a18-c24c-c297-bcb9a4377e2d
+	fromColumn: Top10ProductsTable.store_id
+	toColumn: 'Store Lookup'.store_id
+

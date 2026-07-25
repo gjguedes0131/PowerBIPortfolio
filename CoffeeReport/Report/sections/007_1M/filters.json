@@ -1,0 +1,17 @@
+[
+  {
+    "name": "dff0bdae6b0f4409eac7",
+    "expression": {
+      "Measure": {
+        "Expression": {
+          "SourceRef": {
+            "Entity": "MeasuresTable"
+          }
+        },
+        "Property": "30DayRollingAvg"
+      }
+    },
+    "type": "Categorical",
+    "howCreated": 5
+  }
+]

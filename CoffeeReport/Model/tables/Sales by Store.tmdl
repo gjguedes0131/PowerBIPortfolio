@@ -1,0 +1,122 @@
+﻿table 'Sales by Store'
+
+	column transaction_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: transaction_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_date
+		dataType: dateTime
+		formatString: Long Date
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column transaction_time
+		dataType: dateTime
+		formatString: Long Time
+		summarizeBy: none
+		sourceColumn: transaction_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column store_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: store_id
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column staff_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: staff_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column instore_yn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: instore_yn
+
+		annotation SummarizationSetBy = Automatic
+
+	column order
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: order
+
+		annotation SummarizationSetBy = Automatic
+
+	column line_item_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: line_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity_sold
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: quantity_sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column promo_item_yn
+		dataType: string
+		summarizeBy: none
+		sourceColumn: promo_item_yn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Sales by Store' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gusjg\source\repos\gjguedes0131\PowerBIDax Course\Advanced+DAX+Data+Files\Advanced DAX Data Files\Sales by Store.csv"),[Delimiter=",", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"transaction_id", Int64.Type}, {"transaction_date", type date}, {"transaction_time", type time}, {"store_id", Int64.Type}, {"staff_id", Int64.Type}, {"customer_id", Int64.Type}, {"instore_yn", type text}, {"order", Int64.Type}, {"line_item_id", Int64.Type}, {"product_id", Int64.Type}, {"quantity_sold", Int64.Type}, {"unit_price", type number}, {"promo_item_yn", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

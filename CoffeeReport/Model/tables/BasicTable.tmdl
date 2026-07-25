@@ -1,0 +1,68 @@
+﻿table BasicTable
+
+	column CurrentYearSales
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CurrentYearSales]
+
+		annotation SummarizationSetBy = Automatic
+
+	column PreviousSales
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PreviousSales]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Product Lookup[product]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_ID
+		formatString: 0
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: Calendar[Year_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BasicTable = calculated
+		mode: import
+		source = ```
+				
+				VAR Vrelation =
+				    FILTER (
+				        SUMMARIZECOLUMNS (
+				            'Product Lookup'[product],  // Group by product
+				            'Calendar'[Year_ID],        // Group by year
+				            "CurrentYearSales", ROUND ( [CustomerSales], 0 )  // Calculate and round current year sales
+				        ),
+				        'Product Lookup'[product] <> ""  // Filter out blank products
+				    )
+				RETURN
+				    ADDCOLUMNS (
+				        Vrelation,
+				        "PreviousSales",
+				            SELECTCOLUMNS (
+				                OFFSET (
+				                    -1,  // Offset by one row back
+				                    Vrelation,
+				                    ORDERBY ( 'Product Lookup'[product], ASC, 'Calendar'[Year_ID], ASC ),  // Order by product and year
+				                    PARTITIONBY ( 'Product Lookup'[product] ),  // Partition by product
+				                    MATCHBY ( 'Product Lookup'[product], 'Calendar'[Year_ID] )  // Match by product and year
+				                ),
+				                [CurrentYearSales]  // Select current year sales from the previous row
+				            )
+				    )
+				
+				
+				```
+
+	annotation PBI_Id = 79a20558462d4a8480eba9e3b543fe83
+

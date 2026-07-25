@@ -1,0 +1,145 @@
+{
+  "relationships": [
+    {
+      "source": "6f17504c474b9815d986",
+      "target": "5baf442797bed2924649",
+      "type": 3
+    },
+    {
+      "source": "6f17504c474b9815d986",
+      "target": "0401a688c828a40be2b4",
+      "type": 3
+    },
+    {
+      "source": "6f17504c474b9815d986",
+      "target": "853e0c0378089d9bb0d0",
+      "type": 3
+    },
+    {
+      "source": "5baf442797bed2924649",
+      "target": "6f17504c474b9815d986",
+      "type": 3
+    },
+    {
+      "source": "5baf442797bed2924649",
+      "target": "b5a4d218b5c180cc23b7",
+      "type": 3
+    },
+    {
+      "source": "853e0c0378089d9bb0d0",
+      "target": "5baf442797bed2924649",
+      "type": 3
+    },
+    {
+      "source": "5baf442797bed2924649",
+      "target": "853e0c0378089d9bb0d0",
+      "type": 3
+    },
+    {
+      "source": "5baf442797bed2924649",
+      "target": "0401a688c828a40be2b4",
+      "type": 3
+    },
+    {
+      "source": "5baf442797bed2924649",
+      "target": "97715f54099cd1441411",
+      "type": 3
+    },
+    {
+      "source": "b5a4d218b5c180cc23b7",
+      "target": "5baf442797bed2924649",
+      "type": 3
+    },
+    {
+      "source": "b5a4d218b5c180cc23b7",
+      "target": "853e0c0378089d9bb0d0",
+      "type": 3
+    },
+    {
+      "source": "ad407834487caa528530",
+      "target": "853e0c0378089d9bb0d0",
+      "type": 3
+    },
+    {
+      "source": "ad407834487caa528530",
+      "target": "5baf442797bed2924649",
+      "type": 1
+    },
+    {
+      "source": "ad407834487caa528530",
+      "target": "0401a688c828a40be2b4",
+      "type": 3
+    },
+    {
+      "source": "2d7466ead19024ed7ecc",
+      "target": "5baf442797bed2924649",
+      "type": 3
+    }
+  ],
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "Literal": {
+                    "Value": "''"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          },
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'CoffeeWallpaper.jpg'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "CoffeeWallpaper3809828024273383.jpg"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Normal'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

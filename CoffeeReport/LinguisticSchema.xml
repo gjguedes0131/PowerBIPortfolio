@@ -1,0 +1,34 @@
+<LinguisticSchema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Language="en-US" DynamicImprovement="Default" xmlns="http://schemas.microsoft.com/sqlserver/2016/01/linguisticschema">
+  <Entities>
+    <Entity Name="StoreSalesbyDateToolTip" ConceptualEntity="ffb01920160b62076d47" Source="Generated">
+      <Words>
+        <Word>StoreSalesbyDateToolTip</Word>
+      </Words>
+    </Entity>
+    <Entity Name="SalesByStoreByYear" ConceptualEntity="81dac9a4a6d8ec46a937" Source="Generated">
+      <Words>
+        <Word>SalesByStoreByYear</Word>
+      </Words>
+    </Entity>
+    <Entity Name="pod7D" ConceptualEntity="0bee100ae6416045d4d9" Source="Generated">
+      <Words>
+        <Word>7D</Word>
+      </Words>
+    </Entity>
+    <Entity Name="pod1M" ConceptualEntity="86bfe0e409062aaa1254" Source="Generated">
+      <Words>
+        <Word>1M</Word>
+      </Words>
+    </Entity>
+    <Entity Name="pod3M" ConceptualEntity="81d4383f6f5962dc083f" Source="Generated">
+      <Words>
+        <Word>3M</Word>
+      </Words>
+    </Entity>
+    <Entity Name="InventoryToolTip" ConceptualEntity="e5d87687120a276e90b9" Source="Generated">
+      <Words>
+        <Word>InventoryToolTip</Word>
+      </Words>
+    </Entity>
+  </Entities>
+</LinguisticSchema>

@@ -1,0 +1,59 @@
+table _Measures
+	isHidden
+	lineageTag: 07b8c9d0-e1f2-3456-0123-567890123456
+
+	measure 'Total Revenue' = SUMX(Sales, Sales[quantity_sold] * Sales[unit_price])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales
+		lineageTag: 07000001-0000-0000-0000-000000000001
+
+	measure 'Total Transactions' = DISTINCTCOUNT(Sales[transaction_id])
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 07000001-0000-0000-0000-000000000002
+
+	measure 'Total Units Sold' = SUM(Sales[quantity_sold])
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 07000001-0000-0000-0000-000000000003
+
+	measure 'Avg Revenue per Transaction' = DIVIDE([Total Revenue], [Total Transactions])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Sales
+		lineageTag: 07000001-0000-0000-0000-000000000004
+
+	measure 'Revenue YTD' = TOTALYTD([Total Revenue], Calendar[Transaction_Date])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Time Intelligence
+		lineageTag: 07000001-0000-0000-0000-000000000005
+
+	measure 'Revenue MTD' = TOTALMTD([Total Revenue], Calendar[Transaction_Date])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Time Intelligence
+		lineageTag: 07000001-0000-0000-0000-000000000006
+
+	measure 'Revenue QTD' = TOTALQTD([Total Revenue], Calendar[Transaction_Date])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Time Intelligence
+		lineageTag: 07000001-0000-0000-0000-000000000007
+
+	measure 'Revenue Prior Year' = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR(Calendar[Transaction_Date]))
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Time Intelligence
+		lineageTag: 07000001-0000-0000-0000-000000000008
+
+	measure 'Revenue YoY % Growth' = DIVIDE([Total Revenue] - [Revenue Prior Year], [Revenue Prior Year])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Time Intelligence
+		lineageTag: 07000001-0000-0000-0000-000000000009
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [], {{}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,105 @@
+table Calendar
+	lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
+
+	column Transaction_Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: b1000001-0000-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: Transaction_Date
+
+		variation Variation
+			isDefault
+			relationship: 9957f032-8adf-44cb-8d8f-3671b2c0ca40
+			defaultHierarchy: LocalDateTable_d447a9f6-d681-4169-b3b1-b35eab6e5b8f.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Date_ID
+		dataType: int64
+		lineageTag: b1000001-0000-0000-0000-000000000002
+		summarizeBy: count
+		sourceColumn: Date_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week_ID
+		dataType: int64
+		lineageTag: b1000001-0000-0000-0000-000000000003
+		summarizeBy: count
+		sourceColumn: Week_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week_Desc
+		dataType: string
+		lineageTag: b1000001-0000-0000-0000-000000000004
+		summarizeBy: none
+		sourceColumn: Week_Desc
+
+	column Month_ID
+		dataType: int64
+		lineageTag: b1000001-0000-0000-0000-000000000005
+		summarizeBy: count
+		sourceColumn: Month_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Name
+		dataType: string
+		lineageTag: b1000001-0000-0000-0000-000000000006
+		summarizeBy: none
+		sourceColumn: Month_Name
+
+	column Quarter_ID
+		dataType: int64
+		lineageTag: b1000001-0000-0000-0000-000000000007
+		summarizeBy: count
+		sourceColumn: Quarter_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter_Name
+		dataType: string
+		lineageTag: b1000001-0000-0000-0000-000000000008
+		summarizeBy: none
+		sourceColumn: Quarter_Name
+
+	column Year_ID
+		dataType: int64
+		lineageTag: b1000001-0000-0000-0000-000000000009
+		summarizeBy: count
+		sourceColumn: Year_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week_Year
+		dataType: string
+		lineageTag: b1000001-0000-0000-0000-000000000010
+		summarizeBy: none
+		sourceColumn: Week_Year
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(SourceFolder & "Calendar.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {
+				        {"Transaction_Date", type date},
+				        {"Date_ID", Int64.Type},
+				        {"Week_ID", Int64.Type},
+				        {"Week_Desc", type text},
+				        {"Month_ID", Int64.Type},
+				        {"Month_Name", type text},
+				        {"Quarter_ID", Int64.Type},
+				        {"Quarter_Name", type text},
+				        {"Year_ID", Int64.Type},
+				        {"Week_Year", type text}
+				    })
+				in
+				    ChangedTypes
+
+	annotation PBI_ResultType = Table
+

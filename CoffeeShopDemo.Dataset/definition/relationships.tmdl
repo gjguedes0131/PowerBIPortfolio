@@ -1,0 +1,35 @@
+relationship SalesToCalendar
+	fromColumn: Sales.transaction_date
+	toColumn: Calendar.Transaction_Date
+
+relationship SalesToStore
+	fromColumn: Sales.store_id
+	toColumn: 'Store Lookup'.store_id
+
+relationship SalesToCustomer
+	fromColumn: Sales.customer_id
+	toColumn: 'Customer Lookup'.customer_id
+
+relationship SalesToProduct
+	fromColumn: Sales.product_id
+	toColumn: 'Product Lookup'.product_id
+
+relationship SalesToEmployee
+	fromColumn: Sales.staff_id
+	toColumn: 'Employee Lookup'.staff_id
+
+relationship 9957f032-8adf-44cb-8d8f-3671b2c0ca40
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Transaction_Date
+	toColumn: LocalDateTable_d447a9f6-d681-4169-b3b1-b35eab6e5b8f.Date
+
+relationship 129e2775-ba20-408b-85e6-e44484106497
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Lookup'.customer_since
+	toColumn: LocalDateTable_67c52a2c-e191-4094-82e2-11425180eeab.Date
+
+relationship 4c681881-267a-4dca-be95-f65dfefe654b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Employee Lookup'.start_date
+	toColumn: LocalDateTable_b7492b7f-e526-4d12-8543-c16140cf071d.Date
+

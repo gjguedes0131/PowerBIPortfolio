@@ -1,0 +1,115 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "TableVisual",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 0,
+    "width": 1240,
+    "height": 660,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": { "SourceRef": { "Entity": "Sales" } },
+                  "Property": "transaction_date"
+                }
+              },
+              "queryRef": "Sales.transaction_date",
+              "nativeQueryRef": "transaction_date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": { "SourceRef": { "Entity": "Store Lookup" } },
+                  "Property": "store_city"
+                }
+              },
+              "queryRef": "Store Lookup.store_city",
+              "nativeQueryRef": "store_city"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": { "SourceRef": { "Entity": "Product Lookup" } },
+                  "Property": "product"
+                }
+              },
+              "queryRef": "Product Lookup.product",
+              "nativeQueryRef": "product"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": { "SourceRef": { "Entity": "Customer Lookup" } },
+                  "Property": "customer_name"
+                }
+              },
+              "queryRef": "Customer Lookup.customer_name",
+              "nativeQueryRef": "customer_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": { "SourceRef": { "Entity": "Sales" } },
+                  "Property": "quantity_sold"
+                }
+              },
+              "queryRef": "Sales.quantity_sold",
+              "nativeQueryRef": "quantity_sold"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": { "SourceRef": { "Entity": "Sales" } },
+                  "Property": "unit_price"
+                }
+              },
+              "queryRef": "Sales.unit_price",
+              "nativeQueryRef": "unit_price"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": { "SourceRef": { "Entity": "_Measures" } },
+                  "Property": "Total Revenue"
+                }
+              },
+              "queryRef": "_Measures.Total Revenue",
+              "nativeQueryRef": "Total Revenue"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": { "Literal": { "Value": "'#6F4E37'" } }
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": { "Literal": { "Value": "'#FFFFFF'" } }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
