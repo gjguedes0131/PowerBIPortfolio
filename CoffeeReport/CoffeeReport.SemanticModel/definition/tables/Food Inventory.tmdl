@@ -1,0 +1,81 @@
+table 'Food Inventory'
+	lineageTag: 95e63170-a6f3-4a79-9979-0e464f0c28f3
+
+	column store_id
+		dataType: string
+		lineageTag: a731e69d-efb6-445e-ab4e-5278a89d346e
+		summarizeBy: none
+		sourceColumn: store_id
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column baked_date
+		dataType: dateTime
+		formatString: mm/dd/yyyy
+		lineageTag: 8fb0d4b3-9cf2-4a53-9515-a4cee9116136
+		summarizeBy: none
+		sourceColumn: baked_date
+
+		variation Variation
+			isDefault
+			relationship: 95baf43d-d253-45c6-8a1e-8551685312c8
+			defaultHierarchy: LocalDateTable_3ed37b49-0ade-4aa1-ad9b-ceeecf2b1b2f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column transaction_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a336082c-e3d1-4a7b-b03b-44cad307dbd1
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d59dc583-18a1-4005-82b3-ea8e3161ae2e
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity_start_of_day
+		dataType: int64
+		formatString: 0
+		lineageTag: 6336ae89-0b42-421d-b170-6e9f171670df
+		summarizeBy: sum
+		sourceColumn: quantity_start_of_day
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity_sold
+		dataType: int64
+		formatString: 0
+		lineageTag: 860c39b5-f9f5-4005-8690-96abbabaaf9c
+		summarizeBy: sum
+		sourceColumn: quantity_sold
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Food Inventory' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gusjg\source\repos\gjguedes0131\PowerBIDax Course\Advanced+DAX+Data+Files\Advanced DAX Data Files\Food Inventory.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"store_id", Int64.Type}, {"baked_date", type date}, {"transaction_date", type date}, {"product_id", Int64.Type}, {"quantity_start_of_day", Int64.Type}, {"quantity_sold", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

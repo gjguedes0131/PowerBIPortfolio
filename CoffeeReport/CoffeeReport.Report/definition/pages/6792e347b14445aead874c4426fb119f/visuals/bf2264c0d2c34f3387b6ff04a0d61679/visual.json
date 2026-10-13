@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "bf2264c0d2c34f3387b6ff04a0d61679",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Sales by Product Category'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "nativeQueryRef": "CustomerSales",
+              "field": {
+                "Measure": {
+                  "Property": "CustomerSales",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.CustomerSales",
+              "displayName": "CustomerSales"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "nativeQueryRef": "product_category",
+              "field": {
+                "Column": {
+                  "Property": "product_category",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product_category",
+              "displayName": "product_category"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 230,
+    "width": 610,
+    "x": 20,
+    "z": 1000,
+    "y": 220
+  }
+}

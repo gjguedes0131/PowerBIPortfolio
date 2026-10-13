@@ -1,0 +1,100 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "23d756fbdcb94661a2d453c6a1cd3d3b",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Baked Date'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "slicer",
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "nativeQueryRef": "baked_date",
+              "field": {
+                "Column": {
+                  "Property": "baked_date",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Food Inventory"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Food Inventory.baked_date",
+              "displayName": "baked_date"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 65,
+    "width": 300,
+    "x": 20,
+    "z": 1000,
+    "y": 20
+  }
+}

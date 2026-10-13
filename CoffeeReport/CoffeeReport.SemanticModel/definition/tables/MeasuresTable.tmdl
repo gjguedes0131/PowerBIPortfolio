@@ -1,0 +1,767 @@
+table MeasuresTable
+	lineageTag: 5034d261-5ac4-4dd9-9a1a-d36abef4e25c
+
+	measure Cost =
+			
+			SUMX(
+			    'Sales by Store',
+			    'Sales by Store'[quantity_sold]*
+			    RELATED(
+			        'Product Lookup'[current_cost]
+			    )
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: Tips & Best Practices
+		lineageTag: 9a6302d2-f08f-43c9-863a-81e796582ba8
+
+	measure CustomerSales =
+			
+			Var sales = SUMX(
+			    'Sales by Store',
+			    'Sales by Store'[quantity_sold]*'Sales by Store'[unit_price]
+			)
+			Return
+			sales
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: Tips & Best Practices
+		lineageTag: 3e3c6317-0d2b-4f1b-b309-eb8b3d4b0e5f
+
+	measure AllStoresTotalSalesExcludingStore5 =
+			
+			Var ExcludedStore = 5
+			RETURN
+			CALCULATE(
+			    [CustomerSales],
+			    ALLEXCEPT('Store Lookup'
+			        ,'Store Lookup'[store_id])
+			            ,'Store Lookup'[store_id] <> ExcludedStore
+			)
+		displayFolder: TransactionMeasures
+		lineageTag: f50b0b2a-7666-45de-8dae-aa4110f78379
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotaMTDSales = TOTALMTD([CustomerSales],'Calendar'[Transaction_Date])
+		displayFolder: TransactionMeasures
+		lineageTag: 4df8888b-b110-4514-a6d3-f528a3e13a10
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SevenDayRollingAvg = ```
+			
+			Var Rolling7DayAvg = IF(
+			    COUNTROWS(
+			        DATESINPERIOD(
+			            'Calendar'[Transaction_Date],
+			            LASTDATE('Calendar'[Transaction_Date]), 
+			            -7, 
+			            DAY
+			        )
+			    ) = 7,
+			    AVERAGEX(
+			        DATESINPERIOD(
+			            'Calendar'[Transaction_Date],
+			            LASTDATE('Calendar'[Transaction_Date]),
+			            -7, 
+			            DAY
+			        ), 
+			        [CustomerSales])
+			        ,"N/A")
+			RETURN
+			SWITCH(TRUE(),
+			    Rolling7DayAvg ="N\A","N\A",
+			    Rolling7DayAvg >= 0, FORMAT(Rolling7DayAvg,"$#,##0.00"))
+			
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: 4b802d3f-6bf3-4f01-8231-05e29b30588c
+
+	measure TopSellingProduct = ```
+			
+			// Define the current year based on the selected value in the 'Calendar' table
+			VAR CurrentYear = SELECTEDVALUE('Calendar'[Year_ID])
+			
+			// Calculate the maximum sales value (quantity_sold * unit_price) for the current year
+			VAR TopProductSales = 
+			    CALCULATE(
+			        MAXX(
+			            'Sales by Store', 
+			            'Sales by Store'[quantity_sold] * 'Sales by Store'[unit_price]
+			        ),
+			        YEAR('Sales by Store'[transaction_date]) = CurrentYear
+			    )
+			
+			// Filter the 'Sales by Store' table to include only rows with the maximum sales value for the current year
+			VAR ProductsWithTopSales = 
+			    FILTER(
+			        'Sales by Store', 
+			        YEAR('Sales by Store'[transaction_date]) = CurrentYear && 
+			        'Sales by Store'[quantity_sold] * 'Sales by Store'[unit_price] = TopProductSales
+			    )
+			
+			// Concatenate the product names from the filtered table, separated by a comma and space
+			VAR ProductNames = 
+			    CONCATENATEX(
+			        SUMMARIZE(
+			            ProductsWithTopSales, 
+			            'Product Lookup'[product]
+			        ),
+			        'Product Lookup'[product],
+			        ", "
+			    )
+			
+			// Count the number of distinct products with the maximum sales value
+			VAR ProductCount = 
+			    COUNTROWS(
+			        SUMMARIZE(
+			            ProductsWithTopSales, 
+			            'Product Lookup'[product]
+			        )
+			    )
+			
+			// Return the concatenated product names if there are multiple products, otherwise return the single product name
+			RETURN
+			IF(
+			    ProductCount > 1,
+			    ProductNames,
+			    FIRSTNONBLANK(
+			        'Product Lookup'[product],
+			        1
+			    )
+			)
+			
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: 3685f68a-32b6-471d-b30c-82e8af27b0a7
+
+	measure Measure = ```
+			
+			
+			```
+		formatString: 0
+		displayFolder: TransactionMeasures
+		lineageTag: 934318c4-1731-40aa-aa97-adcc22649614
+
+	measure BottomSellingProduct = ```
+			
+			// Define the current year based on the selected value in the 'Calendar' table
+			VAR CurrentYear = SELECTEDVALUE('Calendar'[Year_ID])
+			
+			// Calculate the minimum sales value (quantity_sold * unit_price) for the current year
+			VAR TopProductSales = 
+			    CALCULATE(
+			        MINX(
+			            'Sales by Store', 
+			            'Sales by Store'[quantity_sold] * 'Sales by Store'[unit_price]
+			        ),
+			        YEAR('Sales by Store'[transaction_date]) = CurrentYear
+			    )
+			
+			// Filter the 'Sales by Store' table to include only rows with the minimum sales value for the current year
+			VAR ProductsWithTopSales = 
+			    FILTER(
+			        'Sales by Store', 
+			        YEAR('Sales by Store'[transaction_date]) = CurrentYear && 
+			        'Sales by Store'[quantity_sold] * 'Sales by Store'[unit_price] = TopProductSales
+			    )
+			
+			// Concatenate the product names from the filtered table, separated by a comma and space
+			VAR ProductNames = 
+			    CONCATENATEX(
+			        SUMMARIZE(
+			            ProductsWithTopSales, 
+			            'Product Lookup'[product]
+			        ),
+			        'Product Lookup'[product],
+			        ", "
+			    )
+			
+			// Count the number of distinct products with the minimum sales value
+			VAR ProductCount = 
+			    COUNTROWS(
+			        SUMMARIZE(
+			            ProductsWithTopSales, 
+			            'Product Lookup'[product]
+			        )
+			    )
+			
+			// Return the concatenated product names if there are multiple products, otherwise return the single product name
+			RETURN
+			IF(
+			    ProductCount > 1,
+			    "Multiple Products",
+			    FIRSTNONBLANK(
+			        'Product Lookup'[product],
+			        1
+			    )
+			)
+			
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: 09f2ed9f-5ac6-4a5d-8f49-34b85dedc22c
+
+	measure MinTransactionForDay = ```
+			
+			Var CurrentDate = MAX('Calendar'[Transaction_Date])
+			RETURN
+			   CALCULATE(
+			        MINX(
+			            'Sales by Store', 
+			            'Sales by Store'[quantity_sold] * 'Sales by Store'[unit_price]
+			        ),
+			        'Sales by Store'[transaction_date] = CurrentDate
+			    )
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: 0fc2a6c2-7ba5-41c4-bdda-670a8ce7b60a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Transactions = COUNTROWS('Sales by Store')
+		formatString: 0
+		displayFolder: TransactionMeasures
+		lineageTag: bb00d117-2d90-40b2-9e68-01997cfe667f
+
+	measure CustomerSalesFormat = ```
+			
+			// Define the variable 'Sales' to hold the value of [CustomerSales]
+			VAR Sales = [CustomerSales]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        // If Sales is 0 or BLANK, return "N/A"
+			        Sales IN { 0, BLANK () }, "N/A",
+			        // If Sales is greater than 0 and less than 1,000, format as "$##0.00"
+			        Sales > 0
+			            && Sales < 1000, FORMAT ( Sales, "$##0.00;($##0.00)" ),
+			        // If Sales is between 1,000 and 100,000, format as "$#,##0.00K"
+			        Sales >= 1000
+			            && Sales < 100000, FORMAT ( Sales / 1000, "$#,##0.00K;($#,##0.00K)" ),
+			        // If Sales is between 100,000 and 1,000,000, format as "$###.0K"
+			        Sales >= 100000
+			            && Sales < 1000000, FORMAT ( Sales / 1000, "$###.0K;($###.0K)" ),
+			        // If Sales is between 1,000,000 and 10,000,000, format as "$#,##0.0M"
+			        Sales >= 1000000
+			            && Sales < 10000000, FORMAT ( Sales / 1000000, "$#,##0.0M;($#,##0.0M)" ),
+			        // If Sales is between 10,000,000 and 100,000,000, format as "$##.0M"
+			        Sales >= 10000000
+			            && Sales < 100000000, FORMAT ( Sales / 1000000, "$##.0M;($##.0M)" ),
+			        // If Sales is 100,000,000 or more, format as "$###.0M"
+			        Sales >= 100000000, FORMAT ( Sales / 1000000, "$###.0M;($###.0M)" )
+			    )
+			
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: 1722bc69-fa82-497c-94df-2ac3cfc3827d
+
+	measure Profit = [CustomerSales] - [Cost]
+		displayFolder: Tips & Best Practices
+		lineageTag: 55c269e3-8e2e-4053-b297-b8e331037ed1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Start Inventory Cost' = ```
+			
+			Var sales = SUMX('Food Inventory',[Beginning Inventory]*Related('Product Lookup'[current_cost]))
+			Return
+			    SWITCH (
+			        TRUE (),
+			        // If Sales is 0 or BLANK, return "N/A"
+			        Sales IN { 0, BLANK () }, "N/A",
+			        // If Sales is greater than 0 and less than 1,000, format as "$##0.00"
+			        Sales > 0
+			            && Sales < 1000, FORMAT ( Sales, "$##0.00;($##0.00)" ),
+			        // If Sales is between 1,000 and 100,000, format as "$#,##0.00K"
+			        Sales >= 1000
+			            && Sales < 100000, FORMAT ( Sales / 1000, "$#,##0.00K;($#,##0.00K)" ),
+			        // If Sales is between 100,000 and 1,000,000, format as "$###.0K"
+			        Sales >= 100000
+			            && Sales < 1000000, FORMAT ( Sales / 1000, "$###.0K;($###.0K)" ),
+			        // If Sales is between 1,000,000 and 10,000,000, format as "$#,##0.0M"
+			        Sales >= 1000000
+			            && Sales < 10000000, FORMAT ( Sales / 1000000, "$#,##0.0M;($#,##0.0M)" ),
+			        // If Sales is between 10,000,000 and 100,000,000, format as "$##.0M"
+			        Sales >= 10000000
+			            && Sales < 100000000, FORMAT ( Sales / 1000000, "$##.0M;($##.0M)" ),
+			        // If Sales is 100,000,000 or more, format as "$###.0M"
+			        Sales >= 100000000, FORMAT ( Sales / 1000000, "$###.0M;($###.0M)" )
+			    )
+			
+			```
+		displayFolder: Tips & Best Practices
+		lineageTag: 5378ca3d-e15f-406a-9619-d67d5e35b4be
+
+	measure 'Beginning Inventory' = SUM('Food Inventory'[quantity_start_of_day])
+		formatString: #,0
+		displayFolder: Tips & Best Practices
+		lineageTag: 59fc6ca4-6947-42cc-9b1a-786b82fea7b9
+
+	measure 'Baked Quantity Sold' = SUM('Food Inventory'[quantity_sold])
+		formatString: #,0
+		displayFolder: Tips & Best Practices
+		lineageTag: 9b6f12dc-5260-41fe-974a-b23a8638ba8a
+
+	measure 'Quantity Sold' = sum('Sales by Store'[quantity_sold])
+		displayFolder: Tips & Best Practices
+		lineageTag: 5bb33d81-5f50-484c-87a5-c6e19dbe5fb3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ending Inventory' = [Beginning Inventory] - [Baked Quantity Sold]
+		formatString: #,0
+		displayFolder: Tips & Best Practices
+		lineageTag: 990f0462-039b-478d-b3d2-7aaf9be1c8f9
+
+	measure 'Ending Inventory Cost' = ```
+			
+			Var sales = SUMX('Food Inventory',[Ending Inventory]*Related('Product Lookup'[current_cost]))
+			Return
+			    SWITCH (
+			        TRUE (),
+			        // If Sales is 0 or BLANK, return "N/A"
+			        Sales IN { 0, BLANK () }, "N/A",
+			        // If Sales is greater than 0 and less than 1,000, format as "$##0.00"
+			        Sales > 0
+			            && Sales < 1000, FORMAT ( Sales, "$##0.00;($##0.00)" ),
+			        // If Sales is between 1,000 and 100,000, format as "$#,##0.00K"
+			        Sales >= 1000
+			            && Sales < 100000, FORMAT ( Sales / 1000, "$#,##0.00K;($#,##0.00K)" ),
+			        // If Sales is between 100,000 and 1,000,000, format as "$###.0K"
+			        Sales >= 100000
+			            && Sales < 1000000, FORMAT ( Sales / 1000, "$###.0K;($###.0K)" ),
+			        // If Sales is between 1,000,000 and 10,000,000, format as "$#,##0.0M"
+			        Sales >= 1000000
+			            && Sales < 10000000, FORMAT ( Sales / 1000000, "$#,##0.0M;($#,##0.0M)" ),
+			        // If Sales is between 10,000,000 and 100,000,000, format as "$##.0M"
+			        Sales >= 10000000
+			            && Sales < 100000000, FORMAT ( Sales / 1000000, "$##.0M;($##.0M)" ),
+			        // If Sales is 100,000,000 or more, format as "$###.0M"
+			        Sales >= 100000000, FORMAT ( Sales / 1000000, "$###.0M;($###.0M)" )
+			    )
+			
+			```
+		displayFolder: Tips & Best Practices
+		lineageTag: a2c8e907-05bb-47b4-a627-9d2325f6cb20
+
+	measure SelectedProductTitle = ```
+			
+			// Define a variable to check if the 'product' column is filtered
+			VAR FilterByProduct = ISFILTERED('Product Lookup'[product])
+			
+			// Define a variable to get the selected product value
+			VAR SelectedProduct = SELECTEDVALUE('Product Lookup'[product])
+			
+			RETURN
+			    // Use IF and SWITCH to return the appropriate title based on whether the product is filtered
+			    IF (
+			        FilterByProduct = FALSE(),
+			        "Total Daily Sales",
+			        IF (
+			            COUNT('Product Lookup'[product]) > 1,
+			            "Multiple Products - Daily Sales",
+			            SWITCH (
+			                TRUE(),
+			                FilterByProduct = TRUE(), SelectedProduct & " - Daily Sales",
+			                "Daily Sales"
+			            )
+			        )
+			    )
+			
+			```
+		lineageTag: 15cec5ad-b91f-472b-8939-638114a6afbd
+
+	measure TransactionDate =
+			
+			Var TransactionDate = Format(MAX('Calendar'[Transaction_Date]),"MM/DD/YYYY")
+			Return
+			 "Top 10 Product Sales: "& TransactionDate
+		lineageTag: 9113ed02-1f2e-4038-9051-d3ebf9ab44fd
+
+	measure TransactionYear =
+			
+			Var TransactionYear = Format(MAX('Calendar'[Transaction_Date]),"YYYY")
+			Return  "Top 10 Products Sales by Store : "& TransactionYear
+		lineageTag: b13c9db9-c70e-4e2e-a0d3-42f8134486eb
+
+	measure 'Sales % +/-' = ```
+			
+			VAR CurrentYear = SELECTEDVALUE('Calendar'[Year_ID])  // Get the selected year from the Calendar table
+			VAR PriorYear = CurrentYear - 1  // Calculate the prior year
+			VAR CurrentYearSales = CALCULATE(
+			    [CustomerSales], 
+			    ALLSELECTED('Calendar'), 
+			    'Calendar'[Year_ID] = CurrentYear
+			)  // Calculate sales for the current year
+			VAR PriorYearSales = CALCULATE(
+			    [CustomerSales], 
+			    ALLSELECTED('Calendar'), 
+			    'Calendar'[Year_ID] = PriorYear
+			)  // Calculate sales for the prior year
+			RETURN
+			    DIVIDE(
+			        (CurrentYearSales - PriorYearSales), 
+			        PriorYearSales, 
+			        0
+			    )  // Calculate the percentage change in sales from the prior year to the current year
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: TransactionMeasures
+		lineageTag: 67502650-ce29-4a4a-9ee2-d0f13870a585
+
+	measure 30DayRollingAvg = ```
+			
+			Var Rolling30DayAvg = IF(
+			    COUNTROWS(
+			        DATESINPERIOD(
+			            'Calendar'[Transaction_Date],
+			            LASTDATE('Calendar'[Transaction_Date]), 
+			            -30, 
+			            DAY
+			        )
+			    ) = 30,
+			    AVERAGEX(
+			        DATESINPERIOD(
+			            'Calendar'[Transaction_Date],
+			            LASTDATE('Calendar'[Transaction_Date]),
+			            -30, 
+			            DAY
+			        ), 
+			        [CustomerSales])
+			        ,"N/A")
+			RETURN
+			SWITCH(TRUE(),
+			    Rolling30DayAvg ="N\A","N\A",
+			    Rolling30DayAvg >= 0, FORMAT(Rolling30DayAvg,"$#,##0.00"))
+			
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: e7d97cfd-2d2d-4ec0-8ea0-b3ad431a63b9
+
+	measure 120DayRollingAvg = ```
+			
+			Var Rolling120DayAvg = IF(
+			    COUNTROWS(
+			        DATESINPERIOD(
+			            'Calendar'[Transaction_Date],
+			            LASTDATE('Calendar'[Transaction_Date]), 
+			            -120, 
+			            DAY
+			        )
+			    ) = 120,
+			    AVERAGEX(
+			        DATESINPERIOD(
+			            'Calendar'[Transaction_Date],
+			            LASTDATE('Calendar'[Transaction_Date]),
+			            -120, 
+			            DAY
+			        ), 
+			        [CustomerSales])
+			        ,"N/A")
+			RETURN
+			SWITCH(TRUE(),
+			    Rolling120DayAvg ="N\A","N\A",
+			    Rolling120DayAvg >= 0, FORMAT(Rolling120DayAvg,"$#,##0.00"))
+			
+			```
+		displayFolder: TransactionMeasures
+		lineageTag: 0ad11450-3848-4d0b-bd50-8b31d6fc80dc
+
+	measure StoreQuantitySoldFormat = ```
+			
+			Var Quantity = [Quantity Sold]
+			Return
+			    SWITCH (
+			
+			        TRUE (),
+			
+			        Quantity IN { 0, BLANK( ) }, "N/A",
+			
+			        Quantity > 0 &&  Quantity < 1000, FORMAT( Quantity, "$##0.00;($##0.00)"),
+			
+			        Quantity >= 1000 && Quantity < 100000, FORMAT( Quantity, "$##,000.00;($##,000.00)" ),
+			
+			        Quantity >= 100000 && Quantity < 1000000, FORMAT( Quantity, "$###,000.00;($###,000.00)" ),
+			
+			        Quantity >= 1000000 && Quantity < 10000000, FORMAT( Quantity, "$#,###,000.00;($#,###,000.00)" ),
+			
+			        Quantity >= 10000000 && Quantity < 100000000, FORMAT( Quantity, "$##,###,000.00;($##,###,000.00)" ),
+			
+			        Quantity >= 100000000,FORMAT( Quantity, "$###,###,000.00;($###,###,000.00)" )
+			
+			    )
+			
+			 
+			
+			```
+		displayFolder: Tips & Best Practices
+		lineageTag: 93e6d0e4-9cae-413a-b194-5de6e80a254f
+
+	measure 7DSelectedProductTitle = ```
+			
+			// Define a variable to check if the 'product' column is filtered
+			VAR FilterByProduct = ISFILTERED('Product Lookup'[product])
+			
+			// Define a variable to get the selected product value
+			VAR SelectedProduct = SELECTEDVALUE('Product Lookup'[product])
+			
+			RETURN
+			    // Use IF and SWITCH to return the appropriate title based on whether the product is filtered
+			    IF (
+			        FilterByProduct = FALSE(),
+			        "7D Sales Avg",
+			        IF (
+			            COUNT('Product Lookup'[product]) > 1,
+			            "Multiple Products - 7D Sales Avg",
+			            SWITCH (
+			                TRUE(),
+			                FilterByProduct = TRUE(), SelectedProduct & " - 7D Sales Avg",
+			                ""
+			            )
+			        )
+			    )
+			
+			```
+		lineageTag: 458afc5d-3c46-4d5c-ae1d-b16dc88fde72
+
+	measure 1MSelectedProductTitle = ```
+			
+			// Define a variable to check if the 'product' column is filtered
+			VAR FilterByProduct = ISFILTERED('Product Lookup'[product])
+			
+			// Define a variable to get the selected product value
+			VAR SelectedProduct = SELECTEDVALUE('Product Lookup'[product])
+			
+			RETURN
+			    // Use IF and SWITCH to return the appropriate title based on whether the product is filtered
+			    IF (
+			        FilterByProduct = FALSE(),
+			        "1M Sales Avg",
+			        IF (
+			            COUNT('Product Lookup'[product]) > 1,
+			            "Multiple Products - 
+			            1M Sales Avg",
+			            SWITCH (
+			                TRUE(),
+			                FilterByProduct = TRUE(), SelectedProduct & " - 
+			                1M Sales Avg",
+			                ""
+			            )
+			        )
+			    )
+			
+			```
+		lineageTag: 9164246a-ca35-4c13-bb90-f3450e998858
+
+	measure 3MSelectedProductTitle = ```
+			
+			// Define a variable to check if the 'product' column is filtered
+			VAR FilterByProduct = ISFILTERED('Product Lookup'[product])
+			
+			// Define a variable to get the selected product value
+			VAR SelectedProduct = SELECTEDVALUE('Product Lookup'[product])
+			
+			RETURN
+			    // Use IF and SWITCH to return the appropriate title based on whether the product is filtered
+			    IF (
+			        FilterByProduct = FALSE(),
+			        "3M Sales Avg",
+			        IF (
+			            COUNT('Product Lookup'[product]) > 1,
+			            "Multiple Products - 
+			            3M Sales Avg",
+			            SWITCH (
+			                TRUE(),
+			                FilterByProduct = TRUE(), SelectedProduct & " - 
+			                3M Sales Avg",
+			                ""
+			            )
+			        )
+			    )
+			
+			```
+		lineageTag: 73e4fa87-3fa7-40b4-87ea-11bc9607d485
+
+	measure 7DTooltipMessage = ```
+			
+			VAR Productv = ISFILTERED('Product Lookup'[product])
+			VAR SelectedProductv = SELECTEDVALUE('Product Lookup'[product])
+			VAR SelectedDatev = SELECTEDVALUE('Calendar'[Transaction_Date])
+			VAR Previous7DaySAvgv = 
+			    CALCULATE(
+			        [SevenDayRollingAvg],
+			        DATEADD('Calendar'[Transaction_Date], -7, DAY)
+			    )
+			VAR Sales = 
+			    DIVIDE([SevenDayRollingAvg] - Previous7DaySAvgv, Previous7DaySAvgv, 0) 
+			VAR SalesFormat = 
+			    SWITCH(
+			        TRUE(),
+			        Sales < 0, "< 0.00%",
+			        Sales = 0, "0.00%",
+			        Sales > 0 && Sales < 999, FORMAT(Sales, "##0.00%"),
+			        Sales > 999, FORMAT(Sales, "#,##0.00%")
+			    )
+			VAR UpDown = 
+			    SWITCH(
+			        TRUE(),
+			        Sales < 0, "Down",
+			        Sales = 0, "No Change",
+			        Sales > 0, "Up"
+			    )
+			RETURN
+			    IF(
+			        Productv && COUNT('Product Lookup'[product]) = 1, "7D"&" : "&
+			        SelectedProductv & " - Avg Store Customer Sales " & UpDown & " " & "( "&SalesFormat&" )",
+			        IF(
+			            Productv && COUNT('Product Lookup'[product]) > 1, "7D"&" : "&
+			            "Multiple Products - Avg Store Customer Sales " & UpDown & " " & "( "&SalesFormat&" )", "7D"&" : "&
+			            "Avg Customer Store Sales " & UpDown & " " & "( "&SalesFormat&" )"
+			        )
+			    )
+			
+			```
+		lineageTag: 272d7870-2abe-45b1-b6ba-1317b01f9174
+
+	measure 1MTooltipMessage = ```
+			
+			VAR Productv = ISFILTERED('Product Lookup'[product])
+			VAR SelectedProductv = SELECTEDVALUE('Product Lookup'[product])
+			VAR SelectedDatev = SELECTEDVALUE('Calendar'[Transaction_Date])
+			VAR Previous1MAvgv = 
+			    CALCULATE( [30DayRollingAvg]
+			        ,
+			        DATEADD('Calendar'[Transaction_Date], -1, MONTH)
+			    )
+			VAR Sales = 
+			    DIVIDE([30DayRollingAvg] - Previous1MAvgv, Previous1MAvgv, 0)
+			VAR SalesFormat = 
+			    SWITCH(
+			        TRUE(),
+			        Sales < 0, "< 0.00%",
+			        Sales = 0, "0.00%",
+			        Sales > 0 && Sales < 999, FORMAT(Sales, "##0.00%"),
+			        Sales >= 999,  FORMAT(Sales, "#,##0.00%")
+			    )
+			VAR UpDown = 
+			    SWITCH(
+			        TRUE(),
+			        Sales < 0, "Down",
+			        Sales = 0, "No Change",
+			        Sales > 0, "Up"
+			    )
+			RETURN
+			    IF(
+			        Productv && COUNT('Product Lookup'[product]) = 1, "1M"&" : "&
+			        SelectedProductv & " - Avg Store Customer Sales " & UpDown & " " & "( "&SalesFormat&" )",
+			        IF(
+			            Productv && COUNT('Product Lookup'[product]) > 1, "1M"&" : "&
+			            "Multiple Products - Avg Store Customer Sales " & UpDown & " " & "( "&SalesFormat&" )","1M"&" : "&
+			            "Avg Customer Store Sales " & UpDown & " " & "( "&SalesFormat&" )"
+			        )
+			    )
+			
+			```
+		lineageTag: b409d8c3-e1c8-4c1b-b367-90a2ff79e168
+
+	measure 3MTooltipMessage = ```
+			
+			VAR Productv = ISFILTERED('Product Lookup'[product])
+			VAR SelectedProductv = SELECTEDVALUE('Product Lookup'[product])
+			VAR SelectedDatev = SELECTEDVALUE('Calendar'[Transaction_Date])
+			VAR Previous3MAvgv = 
+			    CALCULATE( [120DayRollingAvg]
+			        ,
+			        DATEADD('Calendar'[Transaction_Date], -1, MONTH)
+			    )
+			VAR Sales = 
+			    DIVIDE([120DayRollingAvg] - Previous3MAvgv, Previous3MAvgv, 0)
+			VAR SalesFormat = 
+			    SWITCH(
+			        TRUE(),
+			        Sales < 0, "< 0.00%",
+			        Sales = 0, "0.00%",
+			        Sales > 0 && Sales < 999, FORMAT(Sales, "##0.00%"),
+			        Sales >= 999,  FORMAT(Sales, "#,##0.00%")
+			    )
+			VAR UpDown = 
+			    SWITCH(
+			        TRUE(),
+			        Sales < 0, "Down",
+			        Sales = 0, "No Change",
+			        Sales > 0, "Up"
+			    )
+			RETURN
+			    IF(
+			        Productv && COUNT('Product Lookup'[product]) = 1, "3M"&" : "&
+			        SelectedProductv & " - Avg Store Customer Sales " & UpDown & " " & "( "&SalesFormat&" )",
+			        IF(
+			            Productv && COUNT('Product Lookup'[product]) > 1, "3M"&" : "&
+			            "Multiple Products - Avg Store Customer Sales " & UpDown & " " & "( "&SalesFormat&" )",  "3M"&" : "&
+			            "Avg Customer Store Sales " & UpDown & " " & "( "&SalesFormat&" )"
+			        )
+			    )
+			
+			```
+		lineageTag: e7fc1213-2285-4e3a-b40a-6dff4e702d0b
+
+	measure QuantityStartofdayInventory = SUM('Food Inventory'[quantity_start_of_day])
+		formatString: 0
+		displayFolder: Tips & Best Practices
+		lineageTag: 4deb1698-6212-4b55-ac44-09ae94e9e293
+
+	measure '% of Inventory sold to Overall Production' = 1- ([Ending Inventory]/[QuantityStartofdayInventory])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Tips & Best Practices
+		lineageTag: 1399b915-d634-4289-835a-7431d0d5b2f8
+
+	measure ColorPallete = ```
+			
+			Var  BeginingInventoryV = [Beginning Inventory]
+			Var SoldInventoryV = [Baked Quantity Sold]
+			Var SoldInventoryPercentageV = soldInventoryV/BeginingInventoryV
+			Return
+			    SWITCH(TRUE(),SoldInventoryPercentageV >= .2, "#6B8E23",
+			    SoldInventoryPercentageV  >= .1 && SoldInventoryPercentageV < .2 , "#DEA96B",
+			    SoldInventoryPercentageV  < .1, "#CD5C5C","#D3D3D3")
+			
+			```
+		lineageTag: 98de7958-ead1-4de0-96b1-3b571b1de74f
+
+	measure InventoryTooltipMessage = ```
+			
+			VAR Productv = ISFILTERED('Product Lookup'[product])
+			Var SelectedProductv = SELECTEDVALUE('Product Lookup'[product])
+			VAR SelectedDatev = [TransactionDate]
+			Var PercentofInventoryV = Round(ABS([% of Inventory sold to Overall Production]),2)*100&"%"
+			VAR StartofInventory = FORMAT([QuantityStartofdayInventory],"##,##0")
+			
+			Return
+			SWITCH(TRUE(), Productv = TRUE() && COUNT('Product Lookup'[product]) = 1,
+			    SelectedProductv& ": "&"
+			    Start of Inventory "& StartofInventory &"."& " Percent of Inventory Remaining"&" : "& PercentofInventoryV,
+			    Productv = FALSE(),"
+			    Start of Inventory : "& StartofInventory &". "& " Percent of Inventory Remaining"&" : "& PercentofInventoryV)
+			    
+			
+			
+			```
+		lineageTag: 80416dc1-2d3c-44f4-9c1e-6826bacb7205
+
+	column Column
+		formatString: 0
+		lineageTag: 58e45eb7-fb44-4878-9537-9c925872ca59
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MeasuresTable = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 2025655aa87c498eb7ecdcb00c7783dc
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

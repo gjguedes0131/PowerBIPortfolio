@@ -1,5 +1,0 @@
-expression SourceFolder = "C:\Users\gusjg\source\repos\gjguedes0131\PowerBIPortfolio\CoffeSourceFiles\" meta [IsParameterQuery = true, List = {}, DefaultValue = "C:\Users\gusjg\source\repos\gjguedes0131\PowerBIPortfolio\CoffeSourceFiles\", Type = "Text", IsParameterQueryRequired = true]
-	lineageTag: e0000001-0000-0000-0000-000000000001
-
-	annotation PBI_ResultType = Text
-

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "20fc241f8ec4297e3c1b",
+  "displayName": "SalesbyProduct",
+  "displayOption": "ActualSize",
+  "height": 260,
+  "width": 550,
+  "visibility": "HiddenInViewMode",
+  "type": "Tooltip"
+}

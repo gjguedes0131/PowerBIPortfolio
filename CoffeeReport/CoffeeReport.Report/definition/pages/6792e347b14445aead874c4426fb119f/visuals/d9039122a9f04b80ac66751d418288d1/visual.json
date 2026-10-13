@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "d9039122a9f04b80ac66751d418288d1",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Sales by Customer Gender'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "nativeQueryRef": "CustomerSales",
+              "field": {
+                "Measure": {
+                  "Property": "CustomerSales",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.CustomerSales",
+              "displayName": "CustomerSales"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "nativeQueryRef": "gender",
+              "field": {
+                "Column": {
+                  "Property": "gender",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Customer Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Customer Lookup.gender",
+              "displayName": "gender"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 230,
+    "width": 610,
+    "x": 650,
+    "z": 1000,
+    "y": 220
+  }
+}

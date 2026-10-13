@@ -1,0 +1,134 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "dc9e46432660418cb8610827ec0275e0",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Baked Date Inventory and Production'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "nativeQueryRef": "Beginning Inventory",
+              "field": {
+                "Measure": {
+                  "Property": "Beginning Inventory",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Beginning Inventory",
+              "displayName": "Beginning Inventory"
+            },
+            {
+              "nativeQueryRef": "Baked Quantity Sold",
+              "field": {
+                "Measure": {
+                  "Property": "Baked Quantity Sold",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Baked Quantity Sold",
+              "displayName": "Baked Quantity Sold"
+            },
+            {
+              "nativeQueryRef": "Ending Inventory",
+              "field": {
+                "Measure": {
+                  "Property": "Ending Inventory",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Ending Inventory",
+              "displayName": "Ending Inventory"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "nativeQueryRef": "baked_date",
+              "field": {
+                "Column": {
+                  "Property": "baked_date",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Food Inventory"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Food Inventory.baked_date",
+              "displayName": "baked_date"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 240,
+    "width": 750,
+    "x": 20,
+    "z": 1000,
+    "y": 220
+  }
+}

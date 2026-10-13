@@ -1,0 +1,99 @@
+table Top10ProductsTable
+	lineageTag: 221e3c2d-7685-49db-b811-10f3463dc645
+
+	column product
+		lineageTag: 2486ff6d-f531-4b55-91fc-1bb753923819
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Product Lookup[product]
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		lineageTag: 8abd6948-62c3-4c9d-9c59-0c9fd739201d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Product Lookup[product_category]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalSales
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ecee66bf-08b8-432b-a121-6c6585f62566
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TotalSales]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_ID
+		formatString: 0
+		lineageTag: 7dcfe852-79e9-43d3-8537-d6661df11602
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: Calendar[Year_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		formatString: 0
+		lineageTag: 04d8b4c4-96b0-45b8-a1a7-7c4e3aa1cdcc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Product Lookup[product_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_id
+		lineageTag: d4d8cc0a-a230-4360-98db-f3de61c08890
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Store Lookup[store_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Top10ProductsTable = calculated
+		mode: import
+		source = ```
+				
+				// Create a variable to store the top 10 products by sales for each store and year
+				VAR Top10ProductsByStoreYear = 
+				    ADDCOLUMNS(
+				        // Summarize the 'Sales by Store' table by year, store, product, and product category
+				        SUMMARIZE(
+				            'Sales by Store',
+				            'Calendar'[Year_ID],
+				            'Store Lookup'[store_id],
+				            'Product Lookup'[product_id],
+				            'Product Lookup'[product],
+				            'Product Lookup'[product_category]
+				        ),
+				        // Add a column to calculate the total sales for each product within each store and year
+				        "TotalSales", SUMX(
+				            CALCULATETABLE(
+				                'Sales by Store',
+				                ALLEXCEPT('Sales by Store', 'Calendar'[Year_ID], 'Store Lookup'[store_id], 'Product Lookup'[product_id])
+				            ),
+				            'Sales by Store'[quantity_sold] * 'Sales by Store'[unit_price]
+				        )
+				    )
+				RETURN
+				// Filter the summarized table to include only the top 10 products by sales for each store and year
+				FILTER(
+				    Top10ProductsByStoreYear,
+				    // Rank the products within each store and year based on total sales and include only those with a rank of 10 or less
+				    RANKX(
+				        FILTER(Top10ProductsByStoreYear, 
+				            'Calendar'[Year_ID] = EARLIER('Calendar'[Year_ID]) &&
+				            'Store Lookup'[store_id] = EARLIER('Store Lookup'[store_id])
+				        ),
+				        [TotalSales],
+				        ,
+				        DESC
+				    ) <= 10
+				)
+				
+				```
+
+	annotation PBI_Id = 34ed293f57334484a683d344e04b4eff
+

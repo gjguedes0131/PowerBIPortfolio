@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "2aa456280d8642f09c2413b75d7a06bc",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Estimated Profit by Store'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Y": {
+          "projections": [
+            {
+              "nativeQueryRef": "Profit",
+              "field": {
+                "Measure": {
+                  "Property": "Profit",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Profit",
+              "displayName": "Profit"
+            }
+          ]
+        },
+        "Category": {
+          "projections": [
+            {
+              "nativeQueryRef": "store_id",
+              "field": {
+                "Column": {
+                  "Property": "store_id",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.store_id",
+              "displayName": "store_id"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 235,
+    "width": 610,
+    "x": 650,
+    "z": 1000,
+    "y": 220
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "196f818668ce4184a6729455783330d5",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top Products by Year and Store (existing model table)'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "nativeQueryRef": "Year_ID",
+              "field": {
+                "Column": {
+                  "Property": "Year_ID",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top10ProductsTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Top10ProductsTable.Year_ID",
+              "displayName": "Year_ID"
+            },
+            {
+              "nativeQueryRef": "store_id",
+              "field": {
+                "Column": {
+                  "Property": "store_id",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top10ProductsTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Top10ProductsTable.store_id",
+              "displayName": "store_id"
+            },
+            {
+              "nativeQueryRef": "product_category",
+              "field": {
+                "Column": {
+                  "Property": "product_category",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top10ProductsTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Top10ProductsTable.product_category",
+              "displayName": "product_category"
+            },
+            {
+              "nativeQueryRef": "product",
+              "field": {
+                "Column": {
+                  "Property": "product",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top10ProductsTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Top10ProductsTable.product",
+              "displayName": "product"
+            },
+            {
+              "nativeQueryRef": "TotalSales",
+              "field": {
+                "Column": {
+                  "Property": "TotalSales",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top10ProductsTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Top10ProductsTable.TotalSales",
+              "displayName": "TotalSales"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 215,
+    "width": 1240,
+    "x": 20,
+    "z": 1000,
+    "y": 485
+  }
+}

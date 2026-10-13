@@ -1,0 +1,205 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "b2aad3c0e5b94c89b28ff099dc694622",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Store Detail'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "nativeQueryRef": "store_id",
+              "field": {
+                "Column": {
+                  "Property": "store_id",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.store_id",
+              "displayName": "store_id"
+            },
+            {
+              "nativeQueryRef": "store_type",
+              "field": {
+                "Column": {
+                  "Property": "store_type",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.store_type",
+              "displayName": "store_type"
+            },
+            {
+              "nativeQueryRef": "store_city",
+              "field": {
+                "Column": {
+                  "Property": "store_city",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.store_city",
+              "displayName": "store_city"
+            },
+            {
+              "nativeQueryRef": "store_state_province",
+              "field": {
+                "Column": {
+                  "Property": "store_state_province",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.store_state_province",
+              "displayName": "store_state_province"
+            },
+            {
+              "nativeQueryRef": "Neighorhood",
+              "field": {
+                "Column": {
+                  "Property": "Neighorhood",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.Neighorhood",
+              "displayName": "Neighorhood"
+            },
+            {
+              "nativeQueryRef": "CustomerSales",
+              "field": {
+                "Measure": {
+                  "Property": "CustomerSales",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.CustomerSales",
+              "displayName": "CustomerSales"
+            },
+            {
+              "nativeQueryRef": "Profit",
+              "field": {
+                "Measure": {
+                  "Property": "Profit",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Profit",
+              "displayName": "Profit"
+            },
+            {
+              "nativeQueryRef": "Transactions",
+              "field": {
+                "Measure": {
+                  "Property": "Transactions",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Transactions",
+              "displayName": "Transactions"
+            },
+            {
+              "nativeQueryRef": "Quantity Sold",
+              "field": {
+                "Measure": {
+                  "Property": "Quantity Sold",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Quantity Sold",
+              "displayName": "Quantity Sold"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 235,
+    "width": 1240,
+    "x": 20,
+    "z": 1000,
+    "y": 465
+  }
+}

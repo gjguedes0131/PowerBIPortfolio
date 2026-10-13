@@ -1,0 +1,190 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "091012b19695483d8e4a19338b002cb9",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Inventory by Product and Store'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "nativeQueryRef": "store_id",
+              "field": {
+                "Column": {
+                  "Property": "store_id",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Store Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Store Lookup.store_id",
+              "displayName": "store_id"
+            },
+            {
+              "nativeQueryRef": "product_category",
+              "field": {
+                "Column": {
+                  "Property": "product_category",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product_category",
+              "displayName": "product_category"
+            },
+            {
+              "nativeQueryRef": "product",
+              "field": {
+                "Column": {
+                  "Property": "product",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product",
+              "displayName": "product"
+            },
+            {
+              "nativeQueryRef": "Beginning Inventory",
+              "field": {
+                "Measure": {
+                  "Property": "Beginning Inventory",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Beginning Inventory",
+              "displayName": "Beginning Inventory"
+            },
+            {
+              "nativeQueryRef": "Baked Quantity Sold",
+              "field": {
+                "Measure": {
+                  "Property": "Baked Quantity Sold",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Baked Quantity Sold",
+              "displayName": "Baked Quantity Sold"
+            },
+            {
+              "nativeQueryRef": "Ending Inventory",
+              "field": {
+                "Measure": {
+                  "Property": "Ending Inventory",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Ending Inventory",
+              "displayName": "Ending Inventory"
+            },
+            {
+              "nativeQueryRef": "Start Inventory Cost",
+              "field": {
+                "Measure": {
+                  "Property": "Start Inventory Cost",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Start Inventory Cost",
+              "displayName": "Start Inventory Cost"
+            },
+            {
+              "nativeQueryRef": "Ending Inventory Cost",
+              "field": {
+                "Measure": {
+                  "Property": "Ending Inventory Cost",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Ending Inventory Cost",
+              "displayName": "Ending Inventory Cost"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 230,
+    "width": 1240,
+    "x": 20,
+    "z": 1000,
+    "y": 470
+  }
+}

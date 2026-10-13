@@ -1,0 +1,205 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "11cb913403444088a1a939b4e6bd9a3d",
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Product Sales and Margin Estimate'"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'Segoe UI'"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#3D2B1F'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "nativeQueryRef": "product_group",
+              "field": {
+                "Column": {
+                  "Property": "product_group",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product_group",
+              "displayName": "product_group"
+            },
+            {
+              "nativeQueryRef": "product_category",
+              "field": {
+                "Column": {
+                  "Property": "product_category",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product_category",
+              "displayName": "product_category"
+            },
+            {
+              "nativeQueryRef": "product_type",
+              "field": {
+                "Column": {
+                  "Property": "product_type",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product_type",
+              "displayName": "product_type"
+            },
+            {
+              "nativeQueryRef": "product",
+              "field": {
+                "Column": {
+                  "Property": "product",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.product",
+              "displayName": "product"
+            },
+            {
+              "nativeQueryRef": "promo_yn",
+              "field": {
+                "Column": {
+                  "Property": "promo_yn",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  }
+                }
+              },
+              "queryRef": "Product Lookup.promo_yn",
+              "displayName": "promo_yn"
+            },
+            {
+              "nativeQueryRef": "CustomerSales",
+              "field": {
+                "Measure": {
+                  "Property": "CustomerSales",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.CustomerSales",
+              "displayName": "CustomerSales"
+            },
+            {
+              "nativeQueryRef": "Quantity Sold",
+              "field": {
+                "Measure": {
+                  "Property": "Quantity Sold",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Quantity Sold",
+              "displayName": "Quantity Sold"
+            },
+            {
+              "nativeQueryRef": "Cost",
+              "field": {
+                "Measure": {
+                  "Property": "Cost",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Cost",
+              "displayName": "Cost"
+            },
+            {
+              "nativeQueryRef": "Profit",
+              "field": {
+                "Measure": {
+                  "Property": "Profit",
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MeasuresTable"
+                    }
+                  }
+                }
+              },
+              "queryRef": "MeasuresTable.Profit",
+              "displayName": "Profit"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "position": {
+    "height": 240,
+    "width": 1240,
+    "x": 20,
+    "z": 1000,
+    "y": 460
+  }
+}

@@ -1,0 +1,78 @@
+table 'Employee Lookup'
+	lineageTag: b5104b27-1973-4390-9c5e-097fd4959cb7
+
+	column staff_id
+		dataType: int64
+		formatString: 0
+		lineageTag: fddf7487-fb82-4fd5-9172-4de32282b075
+		summarizeBy: none
+		sourceColumn: staff_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column first_name
+		dataType: string
+		lineageTag: 634c54bb-cf65-466e-85ec-d2cab8d026e1
+		summarizeBy: none
+		sourceColumn: first_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column last_name
+		dataType: string
+		lineageTag: b9fee26d-102b-49c5-8234-b9673c2daf86
+		summarizeBy: none
+		sourceColumn: last_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column position
+		dataType: string
+		lineageTag: 4b110962-ce7b-4f81-a14e-b4db596fcb4a
+		summarizeBy: none
+		sourceColumn: position
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cfd62a6c-c535-48b9-9124-53875af37dfc
+		summarizeBy: none
+		sourceColumn: start_date
+
+		variation Variation
+			isDefault
+			relationship: e7e488c3-8278-4ce9-b93d-8cc1565fa709
+			defaultHierarchy: LocalDateTable_9a9b09d6-fb36-4e27-bfc9-5eaff56ca514.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column location
+		dataType: string
+		lineageTag: 218d814b-5af2-4810-b1b7-27d113b79570
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName = 'Employee Lookup'[last_name]&" , "&'Employee Lookup'[first_name]
+		lineageTag: 4675153c-fc3c-4554-b466-5c5311e380f5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Employee Lookup' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\gusjg\source\repos\gjguedes0131\PowerBIDax Course\Advanced+DAX+Data+Files\Advanced DAX Data Files\Employee Lookup.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"staff_id", Int64.Type}, {"first_name", type text}, {"last_name", type text}, {"position", type text}, {"start_date", type date}, {"location", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
